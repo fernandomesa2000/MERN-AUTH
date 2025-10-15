@@ -3,15 +3,16 @@ import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 export const signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { email, password, name } = req.body;
 
     try {
-        if (!name || !email || !password) {
+        if (!email || !password || !name) {
             throw new Error("All fields are required")
         }
 
-        const userAlreadyExists = User.findOne({ email })
-        console.log("userAlreadyExists", userAlreadyExists);
+        const userAlreadyExists = await User.findOne({ email })
+        console.log("Email recibido:", email)
+        console.log("Usuario existente:", userAlreadyExists)
 
         if (userAlreadyExists) {
             return res.status(400).json({ succes: false, message: "User already exists" })
@@ -35,8 +36,12 @@ export const signup = async (req, res) => {
 
         res.status(201).json({
             succes: true,
-            message: "User created successfully"
-        })
+            message: "User created successfully",
+            user: {
+                ...user._doc,
+                password: undefined
+            },
+        });
     } catch (error) {
         res.status(400).json({ succes: false, message: error.message })
     }
