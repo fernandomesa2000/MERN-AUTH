@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import { sendVerificationEmail } from "../mail/emails.js";
 
 export const signup = async (req, res) => {
     const { email, password, name } = req.body;
@@ -30,7 +31,9 @@ export const signup = async (req, res) => {
         await user.save();
 
         //JWT
-        generateTokenAndSetCookie(res, user._id);
+        await generateTokenAndSetCookie(res, user._id);
+
+        sendVerificationEmail(user.email, verificationToken);
 
         res.status(201).json({
             succes: true,
