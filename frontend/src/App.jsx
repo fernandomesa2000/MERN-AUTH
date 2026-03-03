@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom"
 
 import SignUpPage from "./Pages/SignUpPage"
 import LoginPage from "./Pages/LoginPage"
+import EmailVerificationPage from "./Pages/EmailVerificationPage"
 
 function App() {
   return (
