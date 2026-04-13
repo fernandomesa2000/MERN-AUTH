@@ -1,4 +1,4 @@
-import { useRe, useRef, useState } from "react";
+import { useEffect, useRe, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -6,6 +6,8 @@ const EmailVerificationPage = () => {
     const [code, setCode] = useState(["", "", "", "", "", ""])
     const inputRefs = useRef([]);
     const navigate = useNavigate();
+    const isLoading = false
+
     const handleChange = (index, value) => {
         const newCode = [...code]
 
@@ -25,6 +27,10 @@ const EmailVerificationPage = () => {
             setCode(newCode);
 
             //Move the focus to the next input field if value is manually entered
+
+            if (value && index < 5) {
+                inputRefs.current[index + 1].focus();
+            }
         }
     }
     const handleKeyDown = (index, e) => {
@@ -32,7 +38,20 @@ const EmailVerificationPage = () => {
             inputRefs.current[index - 1].focus();
         }
     }
-    const isLoading = false
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const verificationCode = code.join("");
+        alert(`Verification code submitted: ${verificationCode}`);
+
+    }
+
+    // Autosubmit when all fields are filled
+    useEffect(() => {
+        if (code.every(digit => digit !== '')) {
+            handleSubmit(new Event('submit'))
+        }
+    }, [code]);
 
     return (
         <div className="max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden">
@@ -46,7 +65,7 @@ const EmailVerificationPage = () => {
                     Verify Email
                 </h2>
                 <p className="text-center text-gray-300 mb-6">Enter the 6-digit code sent to your email adress</p>
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="flex justify-between">
                         {code.map((digit, index) => (
                             <input
