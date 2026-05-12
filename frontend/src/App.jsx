@@ -5,7 +5,20 @@ import SignUpPage from "./Pages/SignUpPage"
 import LoginPage from "./Pages/LoginPage"
 import EmailVerificationPage from "./Pages/EmailVerificationPage"
 
+import { Toaster } from "react-hot-toast"
+import { useAuthStore } from "./store/authStore"
+import { useEffect } from "react"
+
 function App() {
+  // const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
+
+  // useEffect(() => {
+  //   checkAuth();
+  // }, [checkAuth]);
+
+  // console.log("isAuthenticated", isAuthenticated)
+  // console.log("user", user)
+
   return (
     <div
       className="min h-screen bg-gradient-to-br
@@ -19,6 +32,7 @@ function App() {
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/verify-email" element={<EmailVerificationPage />}></Route>
       </Routes>
+      <Toaster />
     </div >
   )
 }

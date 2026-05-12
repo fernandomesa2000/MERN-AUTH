@@ -2,6 +2,7 @@ import { useEffect, useRe, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const EmailVerificationPage = () => {
     const [code, setCode] = useState(["", "", "", "", "", ""])
@@ -46,8 +47,9 @@ const EmailVerificationPage = () => {
         try {
             await verifyEmail(verificationCode);
             navigate("/");
+            toast.success("Email verified successfully");
         } catch (error) {
-
+            console.log(error);
         }
     }
 
@@ -85,6 +87,7 @@ const EmailVerificationPage = () => {
                             />
                         ))}
                     </div>
+                    {error && <p className="text-red-500 text-center">{error}</p>}
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
