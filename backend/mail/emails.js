@@ -47,7 +47,7 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
             from: `${sender.name} <${sender.email}>`,
             to: email,
             subject: "Reset your password",
-            html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetLink),
+            html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
         });
     } catch (error) {
         console.log(`Error sending password reset email:`, error);
