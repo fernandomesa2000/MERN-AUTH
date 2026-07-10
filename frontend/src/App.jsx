@@ -99,7 +99,9 @@ function App() {
               <ResetPasswordPage />
             </RedirectAuthenticatedUser>
           }>
-
+          {/*Cathes all routes that don't exist*/}
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />}>
         </Route>
       </Routes>
       <Toaster />
