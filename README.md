@@ -33,7 +33,7 @@ featuring secure JWT-based authentication, email verification via OTP, and passw
 - ✅ Logout with cookie invalidation
 - ✅ Check authenticated session (`/check-auth`)
 - ✅ Password recovery flow (request + reset)
-- 🚧 Frontend UI (in progress)
+- ✅ Frontend UI (in progress)
 
 ---
 
